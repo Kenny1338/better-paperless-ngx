@@ -10,19 +10,21 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Poetry
-RUN curl -sSL https://install.python-poetry.org | python3 -
-ENV PATH="/root/.local/bin:$PATH"
-
-# Copy project files
+# Copy dependency files
 COPY pyproject.toml poetry.lock ./
+
+# Install Poetry and export requirements
+RUN pip install poetry && \
+    poetry export -f requirements.txt --output requirements.txt --without-hashes && \
+    pip install -r requirements.txt && \
+    pip uninstall -y poetry
+
+# Copy application code
 COPY src/ ./src/
 COPY config/ ./config/
 
-# Install dependencies without dev dependencies
-RUN poetry config virtualenvs.create false && \
-    poetry install --no-dev --no-interaction --no-ansi || \
-    poetry install --without dev --no-interaction --no-ansi
+# Install the package
+RUN pip install -e .
 
 # Create non-root user
 RUN useradd -m -u 1000 paperless && \
