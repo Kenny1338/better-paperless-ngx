@@ -7,6 +7,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     gcc \
     curl \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Poetry
@@ -14,13 +15,14 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 ENV PATH="/root/.local/bin:$PATH"
 
 # Copy project files
-COPY pyproject.toml poetry.lock* ./
+COPY pyproject.toml poetry.lock ./
 COPY src/ ./src/
 COPY config/ ./config/
 
-# Install dependencies
-RUN poetry config virtualenvs.create false \
-    && poetry install --only main --no-interaction --no-ansi
+# Install dependencies without dev dependencies
+RUN poetry config virtualenvs.create false && \
+    poetry install --no-dev --no-interaction --no-ansi || \
+    poetry install --without dev --no-interaction --no-ansi
 
 # Create non-root user
 RUN useradd -m -u 1000 paperless && \
@@ -38,4 +40,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=40s \
   CMD python -c "import sys; sys.exit(0)"
 
 # Run application
-CMD ["python", "-m", "better_paperless", "--help"]
+CMD ["python", "-m", "better_paperless", "batch"]

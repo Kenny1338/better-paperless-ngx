@@ -153,7 +153,7 @@ Closes #123
 
 ## 🐛 Bug Reports
 
-Use [GitHub Issues](https://github.com/yourusername/better-paperless/issues) with:
+Use [GitHub Issues](https://github.com/Kenny1338/better-paperless-ngx/issues) with:
 
 **Template:**
 ```markdown
@@ -179,7 +179,7 @@ Relevant log output
 
 ## 💡 Feature Requests
 
-Use [GitHub Discussions](https://github.com/yourusername/better-paperless/discussions) for:
+Use [GitHub Discussions](https://github.com/Kenny1338/better-paperless-ngx/discussions) for:
 - Feature ideas
 - Discussions
 - Questions
@@ -208,8 +208,7 @@ Contributors will be recognized in:
 
 ## 📞 Questions?
 
-- 💬 [GitHub Discussions](https://github.com/yourusername/better-paperless/discussions)
-- 📧 Email: dev@better-paperless.dev
+- 💬 [GitHub Discussions](https://github.com/Kenny1338/better-paperless-ngx/discussions)
 
 ## 📜 Code of Conduct
 

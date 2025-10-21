@@ -48,8 +48,8 @@ Intelligent document processing for Paperless-ngx with LLM-powered automation fo
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/better-paperless.git
-cd better-paperless
+git clone https://github.com/Kenny1338/better-paperless-ngx.git
+cd better-paperless-ngx
 
 # Install dependencies
 poetry install
@@ -111,8 +111,8 @@ docker-compose up -d
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/better-paperless.git
-cd better-paperless
+git clone https://github.com/Kenny1338/better-paperless-ngx.git
+cd better-paperless-ngx
 
 # Create virtual environment
 python -m venv venv
@@ -296,8 +296,8 @@ better-paperless/
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/better-paperless.git
-cd better-paperless
+git clone https://github.com/Kenny1338/better-paperless-ngx.git
+cd better-paperless-ngx
 
 # Install development dependencies
 poetry install --with dev
@@ -486,9 +486,8 @@ This project is licensed under the MIT License - see [`LICENSE`](LICENSE:1) for 
 
 ## 📞 Support
 
-- 📧 Email: support@better-paperless.dev
-- 💬 Discussions: [GitHub Discussions](https://github.com/yourusername/better-paperless/discussions)
-- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/better-paperless/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/Kenny1338/better-paperless-ngx/discussions)
+- 🐛 Issues: [GitHub Issues](https://github.com/Kenny1338/better-paperless-ngx/issues)
 
 ## 🗺️ Roadmap
 
@@ -505,6 +504,6 @@ This project is licensed under the MIT License - see [`LICENSE`](LICENSE:1) for 
 
 **Made with ❤️ for the Paperless Community**
 
-[⭐ Star on GitHub](https://github.com/yourusername/better-paperless)
+[⭐ Star on GitHub](https://github.com/Kenny1338/better-paperless-ngx)
 
 </div>

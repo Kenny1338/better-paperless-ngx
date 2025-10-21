@@ -185,4 +185,4 @@ docker-compose logs -f better-paperless
 
 **Good luck with Better Paperless! 🎉**
 
-Questions? [GitHub Issues](https://github.com/yourusername/better-paperless/issues)
+Questions? [GitHub Issues](https://github.com/Kenny1338/better-paperless-ngx/issues)
