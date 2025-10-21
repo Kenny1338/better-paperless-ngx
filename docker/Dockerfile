@@ -10,21 +10,13 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy dependency files
+# Copy project files
 COPY pyproject.toml poetry.lock ./
-
-# Install Poetry and export requirements
-RUN pip install poetry && \
-    poetry export -f requirements.txt --output requirements.txt --without-hashes && \
-    pip install -r requirements.txt && \
-    pip uninstall -y poetry
-
-# Copy application code
 COPY src/ ./src/
 COPY config/ ./config/
 
-# Install the package
-RUN pip install -e .
+# Install dependencies directly with pip (supports pyproject.toml)
+RUN pip install --no-cache-dir .
 
 # Create non-root user
 RUN useradd -m -u 1000 paperless && \
