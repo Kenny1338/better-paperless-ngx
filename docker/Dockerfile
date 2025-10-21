@@ -3,20 +3,29 @@ FROM python:3.11-slim
 # Set working directory
 WORKDIR /app
 
-# Install system dependencie's
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     gcc \
     curl \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy project files
+# Install Poetry
+RUN pip install --no-cache-dir poetry==1.8.2
+
+# Copy dependency files
 COPY pyproject.toml poetry.lock ./
+
+# Configure Poetry to not create virtual environments and install dependencies
+RUN poetry config virtualenvs.create false && \
+    poetry install --only main --no-interaction --no-ansi --no-root
+
+# Copy project files
 COPY src/ ./src/
 COPY config/ ./config/
 
-# Install dependencies directly with pip (supports pyproject.toml)
-RUN pip install --no-cache-dir .
+# Install the project itself
+RUN poetry install --only-root --no-interaction --no-ansi
 
 # Create non-root user
 RUN useradd -m -u 1000 paperless && \
