@@ -1,0 +1,151 @@
+[tool.poetry]
+name = "better-paperless"
+version = "1.0.0"
+description = "Automated Paperless-ngx with LLM Integration - Intelligent document processing, tagging, and metadata extraction"
+authors = ["Your Name <your.email@example.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/yourusername/better-paperless"
+repository = "https://github.com/yourusername/better-paperless"
+keywords = ["paperless", "document-management", "llm", "automation", "ai"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.13"
+
+# HTTP & API
+httpx = "^0.26.0"
+aiohttp = "^3.9.0"
+requests = "^2.31.0"
+
+# LLM Providers
+openai = "^1.12.0"
+anthropic = "^0.18.0"
+tiktoken = {version = "^0.5.2", optional = true}
+
+# Data Validation & Serialization
+pydantic = "^2.6.0"
+pydantic-settings = "^2.2.0"
+
+# CLI
+typer = "^0.12.0"
+rich = "^13.7.0"
+click = "^8.1.7"
+
+# Configuration
+pyyaml = "^6.0.1"
+python-dotenv = "^1.0.1"
+
+# Async & Concurrency
+aiofiles = "^23.2.1"
+
+# Text Processing
+langdetect = "^1.0.9"
+python-dateutil = "^2.8.2"
+
+# Caching
+redis = {version = "^5.0.1", optional = true}
+aiocache = "^0.12.2"
+
+# Logging & Monitoring
+structlog = "^24.1.0"
+prometheus-client = {version = "^0.19.0", optional = true}
+
+# Task Scheduling
+apscheduler = "^3.10.4"
+watchdog = "^4.0.0"
+
+# Utilities
+tenacity = "^8.2.3"
+
+[tool.poetry.group.dev.dependencies]
+# Testing
+pytest = "^8.0.0"
+pytest-asyncio = "^0.23.0"
+pytest-cov = "^4.1.0"
+pytest-mock = "^3.12.0"
+pytest-httpx = "^0.29.0"
+
+# Code Quality
+black = "^24.1.0"
+isort = "^5.13.0"
+flake8 = "^7.0.0"
+mypy = "^1.8.0"
+pylint = "^3.0.0"
+
+# Documentation
+mkdocs = "^1.5.0"
+mkdocs-material = "^9.5.0"
+mkdocstrings = {extras = ["python"], version = "^0.24.0"}
+
+# Development Tools
+ipython = "^8.21.0"
+pre-commit = "^3.6.0"
+
+[tool.poetry.extras]
+all = ["redis", "prometheus-client", "tiktoken"]
+monitoring = ["prometheus-client"]
+distributed = ["redis"]
+llm-extras = ["tiktoken"]
+
+[tool.poetry.scripts]
+better-paperless = "better_paperless.__main__:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 100
+target-version = ['py311']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 100
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-ra -q --strict-markers --cov=better_paperless --cov-report=term-missing"
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["tests/*", "**/__pycache__/*"]
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+skip_covered = false

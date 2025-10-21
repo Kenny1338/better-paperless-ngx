@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  better-paperless:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: better-paperless
+    restart: unless-stopped
+    
+    environment:
+      # Paperless Configuration
+      PAPERLESS_API_URL: ${PAPERLESS_API_URL:-http://paperless:8000}
+      PAPERLESS_API_TOKEN: ${PAPERLESS_API_TOKEN}
+      
+      # LLM Configuration
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      
+      # Redis Configuration (optional)
+      REDIS_URL: redis://redis:6379/0
+      
+      # Application Configuration
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      
+    volumes:
+      - ../config:/app/config:ro
+      - ../logs:/app/logs
+      - ../data:/app/data
+      
+    ports:
+      - "${APP_PORT:-8080}:8080"
+      - "${METRICS_PORT:-9090}:9090"
+      
+    depends_on:
+      - redis
+      
+    networks:
+      - paperless-network
+    
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sys; sys.exit(0)"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 40s
+    
+    # Example command - uncomment and modify as needed
+    # command: ["python", "-m", "better_paperless", "batch", "--all", "--concurrency", "3"]
+
+  redis:
+    image: redis:7-alpine
+    container_name: better-paperless-redis
+    restart: unless-stopped
+    
+    volumes:
+      - redis-data:/data
+      
+    networks:
+      - paperless-network
+    
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+volumes:
+  redis-data:
+
+networks:
+  paperless-network:
+    external: true  # Assumes you have a Paperless network already
+    # If not, change to:
+    # driver: bridge

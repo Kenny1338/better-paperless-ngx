@@ -1,0 +1,143 @@
+# Better Paperless Configuration File
+# Copy this file to config.yaml and adjust the settings
+
+# Paperless-ngx Configuration
+paperless:
+  url: "${PAPERLESS_API_URL}"  # Set via environment variable
+  api_token: "${PAPERLESS_API_TOKEN}"  # Set via environment variable
+  verify_ssl: true  # Set to false if using self-signed certificates
+  timeout: 30
+  max_retries: 3
+
+# LLM Provider Configuration
+llm:
+  primary_provider: "openai"  # openai, anthropic, ollama
+  fallback_provider: null     # Optional fallback provider
+  
+  openai:
+    api_key: "${OPENAI_API_KEY}"
+    model: "gpt-4-turbo-preview"  # or "gpt-3.5-turbo" for lower cost
+    temperature: 0.3
+    max_tokens: 2000
+    organization: ""  # Optional
+    
+  anthropic:
+    api_key: "${ANTHROPIC_API_KEY}"
+    model: "claude-3-sonnet-20240229"
+    temperature: 0.3
+    max_tokens: 2000
+    
+  ollama:
+    base_url: "http://localhost:11434"
+    model: "llama2"
+    temperature: 0.3
+    max_tokens: 2000
+
+# Processing Configuration
+processing:
+  # Feature toggles
+  features:
+    title_generation: true
+    tagging: true
+    metadata_extraction: true
+    categorization: true
+    summarization: false
+    
+  # Processing rules
+  rules:
+    skip_if_title_exists: false       # Set to true to skip documents with existing titles
+    skip_if_tagged: false             # Set to true to skip documents with existing tags
+    overwrite_existing_metadata: true # Set to false to preserve existing metadata
+    processed_tag: "bp-processed"     # Tag set after processing
+    skip_if_processed_tag: true       # Skip documents with this tag to avoid reprocessing
+    
+  # Batch processing
+  batch:
+    enabled: true
+    batch_size: 10
+    max_concurrent_processes: 5
+    process_on_startup: false
+    
+  # Document filtering
+  filters:
+    exclude_tags: []  # Tags to exclude from processing
+    include_document_types: []  # Empty means all types
+    min_document_age_hours: 0  # Process immediately
+
+# Tagging Configuration
+tagging:
+  rule_based:
+    enabled: false  # Enable rule-based tagging (regex patterns)
+    rules_file: "config/rules/tagging_rules.yaml"
+    
+  llm_based:
+    enabled: true  # Enable LLM-based intelligent tagging
+    confidence_threshold: 0.7
+    max_tags_per_document: 10
+    use_existing_tags_as_context: true
+    
+  tag_creation:
+    auto_create_tags: true
+    tag_color_scheme: "categorical"  # categorical, random, fixed
+    default_color: "#3498db"
+
+# Metadata Extraction Configuration
+metadata:
+  date_extraction:
+    enabled: true
+    prefer_document_date_over_content: false
+    date_formats: ["DD.MM.YYYY", "YYYY-MM-DD", "MM/DD/YYYY"]
+    
+  correspondent_extraction:
+    enabled: true
+    auto_create_correspondents: true
+    use_existing_correspondents: true
+    confidence_threshold: 0.8
+    
+  custom_fields:
+    invoice_number:
+      enabled: true
+      field_type: "text"
+    amount:
+      enabled: true
+      field_type: "monetary"
+
+# Summarization Configuration
+summarization:
+  enabled: false
+  max_length: 500
+  style: "concise"  # concise, detailed, bullet_points
+  languages: ["en", "de"]
+  store_in_custom_field: "summary"
+
+# Caching Configuration
+cache:
+  enabled: true
+  backend: "memory"  # memory, redis
+  ttl_seconds: 3600
+  
+  redis:
+    host: "localhost"
+    port: 6379
+    db: 0
+    password: "${REDIS_PASSWORD}"
+
+# Logging Configuration
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  format: "json"  # json, text
+  output: "file"  # file, console, both
+  
+  file:
+    path: "logs/better-paperless.log"
+    max_size_mb: 100
+    backup_count: 5
+    rotation: "daily"  # daily, size
+
+# Monitoring & Metrics
+monitoring:
+  enabled: false
+  metrics_port: 9090
+  
+  prometheus:
+    enabled: false

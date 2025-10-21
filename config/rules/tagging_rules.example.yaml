@@ -1,0 +1,120 @@
+# Rule-based Tagging Configuration
+# Copy this file to tagging_rules.yaml and customize the rules
+# Rules are evaluated in order and all matching rules apply
+
+rules:
+  # Financial documents
+  - name: "Invoice Detection"
+    patterns:
+      - regex: '\b(invoice|rechnung|factura)\b'
+        case_insensitive: true
+    tags: ["invoice", "financial"]
+    priority: 10
+    
+  - name: "Bank Statement"
+    patterns:
+      - regex: '\b(bank statement|kontoauszug|account statement)\b'
+        case_insensitive: true
+    tags: ["bank-statement", "financial"]
+    priority: 10
+    
+  - name: "Receipt"
+    patterns:
+      - regex: '\b(receipt|quittung|bon)\b'
+        case_insensitive: true
+    tags: ["receipt", "financial"]
+    priority: 10
+    
+  # Utilities
+  - name: "Electricity Bill"
+    patterns:
+      - regex: '\b(electricity|strom|energie|power)\b'
+        case_insensitive: true
+      - regex: '\b(bill|rechnung|invoice)\b'
+        case_insensitive: true
+    tags: ["utility", "electricity"]
+    priority: 8
+    
+  - name: "Water Bill"
+    patterns:
+      - regex: '\b(water|wasser)\b'
+        case_insensitive: true
+      - regex: '\b(bill|rechnung|invoice)\b'
+        case_insensitive: true
+    tags: ["utility", "water"]
+    priority: 8
+    
+  - name: "Gas Bill"
+    patterns:
+      - regex: '\b(gas|heating)\b'
+        case_insensitive: true
+      - regex: '\b(bill|rechnung|invoice)\b'
+        case_insensitive: true
+    tags: ["utility", "gas"]
+    priority: 8
+    
+  # Insurance
+  - name: "Insurance Documents"
+    patterns:
+      - regex: '\b(insurance|versicherung)\b'
+        case_insensitive: true
+    tags: ["insurance"]
+    priority: 9
+    
+  # Healthcare
+  - name: "Medical Documents"
+    patterns:
+      - regex: '\b(medical|doctor|arzt|kranken|hospital)\b'
+        case_insensitive: true
+    tags: ["healthcare"]
+    priority: 9
+    
+  # Contracts
+  - name: "Contracts"
+    patterns:
+      - regex: '\b(contract|vertrag|agreement)\b'
+        case_insensitive: true
+    tags: ["contract"]
+    priority: 10
+    
+  # Tax documents
+  - name: "Tax Documents"
+    patterns:
+      - regex: '\b(tax|steuer|finanzamt|irs)\b'
+        case_insensitive: true
+    tags: ["tax", "important"]
+    priority: 10
+    
+  # Employment
+  - name: "Employment Documents"
+    patterns:
+      - regex: '\b(employment|salary|payslip|gehalt)\b'
+        case_insensitive: true
+    tags: ["employment"]
+    priority: 9
+
+# Tag aliases - map similar tags to standard tags
+tag_aliases:
+  "bill": "invoice"
+  "rechnung": "invoice"
+  "factura": "invoice"
+  "statement": "bank-statement"
+  "payslip": "salary"
+
+# Tag hierarchy - parent-child relationships
+tag_hierarchy:
+  financial:
+    - invoice
+    - receipt
+    - bank-statement
+    - tax
+  utility:
+    - electricity
+    - water
+    - gas
+    - internet
+  personal:
+    - healthcare
+    - insurance
+    - contract
+    - employment
