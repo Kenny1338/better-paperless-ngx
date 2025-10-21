@@ -13,8 +13,8 @@ RUN apt-get update && apt-get install -y \
 # Install Poetry
 RUN pip install --no-cache-dir poetry==1.8.2
 
-# Copy dependency files
-COPY pyproject.toml poetry.lock ./
+# Copy dependency files and README
+COPY pyproject.toml poetry.lock README.md ./
 
 # Copy project files (needed for poetry install)
 COPY src/ ./src/
