@@ -22,7 +22,8 @@ COPY config/ ./config/
 
 # Configure Poetry to not create virtual environments and install everything
 RUN poetry config virtualenvs.create false && \
-    poetry install --only main --no-interaction --no-ansi
+    poetry install --only main --no-interaction --no-ansi && \
+    python -c "import better_paperless; print(f'Successfully installed better_paperless {better_paperless.__version__}')"
 
 # Create non-root user
 RUN useradd -m -u 1000 paperless && \
