@@ -3,7 +3,7 @@ FROM python:3.11-slim
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies
+# Install system dependencie's
 RUN apt-get update && apt-get install -y \
     gcc \
     curl \
