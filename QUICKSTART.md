@@ -44,7 +44,7 @@ paperless:
 llm:
   primary_provider: "openai"
   openai:
-    model: "gpt-4-turbo-preview"  # or "gpt-3.5-turbo" for lower cost
+    model: "gpt-5-mini"  # Recommended for cost-efficiency
 ```
 
 ### 4. Test Configuration
@@ -125,12 +125,15 @@ python -m poetry run better-paperless init
 
 ## 💡 Tips
 
-### Reduce Costs
+### Use Different Models
 ```yaml
 # In config.yaml:
 llm:
   openai:
-    model: "gpt-3.5-turbo"  # Cheaper than GPT-4
+    model: "gpt-5-mini"  # Best cost-efficiency (recommended)
+  # or
+  anthropic:
+    model: "claude-4.5-sonnet"  # Best quality
 ```
 
 ### Only Generate Titles

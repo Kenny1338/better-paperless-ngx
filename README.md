@@ -22,7 +22,7 @@ Intelligent document processing for Paperless-ngx with LLM-powered automation fo
 - **📁 Categorization**: Intelligent assignment to document types
 - **📝 Summaries**: Optionally generated document summaries
 - **⚡ Batch Processing**: Efficient parallel processing of multiple documents
-- **🔌 Multi-LLM Support**: OpenAI (GPT-4), Anthropic (Claude), Ollama (local)
+- **🔌 Multi-LLM Support**: OpenAI (GPT-5-mini), Anthropic (Claude 4.5 Sonnet), Ollama (local)
 - **🐳 Docker-Ready**: Complete Docker setup with docker-compose
 - **🎨 Rich CLI**: User-friendly command-line interface with progress indicators
 
@@ -286,9 +286,9 @@ better-paperless/
 
 ### LLM Providers
 
-- **OpenAI**: GPT-4 Turbo (recommended)
-- **Anthropic**: Claude 3 Sonnet
-- **Ollama**: Local models (llama2, etc.)
+- **OpenAI**: GPT-5-mini (recommended for cost-efficiency)
+- **Anthropic**: Claude 4.5 Sonnet (recommended for quality)
+- **Ollama**: Local models (llama2, llama3, etc.)
 
 ## 🛠️ Development
 
@@ -441,11 +441,17 @@ services:
 ### Typical Processing
 
 - **Processing time**: 2-5 seconds per document
-- **LLM costs** (GPT-4 Turbo):
-  - Title: ~$0.01
-  - Tags: ~$0.01
-  - Metadata: ~$0.01
-  - **Total**: ~$0.03 per document
+- **LLM costs** (GPT-5-mini):
+  - Title: ~$0.001
+  - Tags: ~$0.001
+  - Metadata: ~$0.001
+  - **Total**: ~$0.003 per document
+
+- **LLM costs** (Claude 4.5 Sonnet):
+  - Title: ~$0.015
+  - Tags: ~$0.015
+  - Metadata: ~$0.015
+  - **Total**: ~$0.045 per document
 
 ### Optimization
 

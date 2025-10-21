@@ -20,7 +20,7 @@ COPY config/ ./config/
 
 # Install dependencies
 RUN poetry config virtualenvs.create false \
-    && poetry install --no-dev --no-interaction --no-ansi
+    && poetry install --only main --no-interaction --no-ansi
 
 # Create non-root user
 RUN useradd -m -u 1000 paperless && \
