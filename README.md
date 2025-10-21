@@ -66,12 +66,33 @@ cp .env.example .env
 nano .env
 ```
 
-### With Docker
+### With Docker (Recommended for Unraid)
+
+**Pull from GitHub Container Registry:**
+
+```bash
+docker pull ghcr.io/kenny1338/better-paperless-ngx:latest
+```
+
+**Run with Docker:**
+
+```bash
+docker run -d \
+  --name better-paperless \
+  -e PAPERLESS_API_URL=http://your-paperless:8000 \
+  -e PAPERLESS_API_TOKEN=your_token_here \
+  -e OPENAI_API_KEY=your_openai_key_here \
+  -v /path/to/config:/app/config \
+  -v /path/to/logs:/app/logs \
+  ghcr.io/kenny1338/better-paperless-ngx:latest
+```
+
+**Or use Docker Compose:**
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/better-paperless.git
-cd better-paperless
+git clone https://github.com/kenny1338/better-paperless-ngx.git
+cd better-paperless-ngx
 
 # Create .env file
 cp .env.example .env
@@ -370,6 +391,25 @@ rules:
 
 ## 🐳 Docker Deployment
 
+### Unraid
+
+**Docker Pull Command:**
+```
+ghcr.io/kenny1338/better-paperless-ngx:latest
+```
+
+**Unraid Template Settings:**
+- **Repository**: `ghcr.io/kenny1338/better-paperless-ngx:latest`
+- **Network Type**: Bridge
+- **Port Mappings**: None required (unless using webhook mode)
+- **Environment Variables**:
+  - `PAPERLESS_API_URL` → Your Paperless-ngx URL (e.g., `http://192.168.1.100:8000`)
+  - `PAPERLESS_API_TOKEN` → Your Paperless API token
+  - `OPENAI_API_KEY` → Your OpenAI API key
+- **Volume Mappings**:
+  - `/app/config` → `/mnt/user/appdata/better-paperless/config`
+  - `/app/logs` → `/mnt/user/appdata/better-paperless/logs`
+
 ### Standalone
 
 ```bash
@@ -384,13 +424,14 @@ Add to your existing `docker-compose.yml`:
 ```yaml
 services:
   better-paperless:
-    image: better-paperless:latest
+    image: ghcr.io/kenny1338/better-paperless-ngx:latest
     environment:
       PAPERLESS_API_URL: http://paperless:8000
       PAPERLESS_API_TOKEN: ${PAPERLESS_API_TOKEN}
       OPENAI_API_KEY: ${OPENAI_API_KEY}
     volumes:
-      - ./config:/app/config:ro
+      - ./config:/app/config
+      - ./logs:/app/logs
     networks:
       - paperless-network
 ```
